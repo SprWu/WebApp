@@ -8,9 +8,9 @@ import router from './router'
 import Mint from 'mint-ui'
 import 'mint-ui/lib/style.css'
 Vue.use(Mint)
-
 // 导入 MUI 组件
 import './lib/mui/css/mui.css'
+import './lib/mui/css/icons-extra.css'
 
 Vue.config.productionTip = false
 // console.log('Init Ok')
