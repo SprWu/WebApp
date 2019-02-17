@@ -1,5 +1,5 @@
 # webapp
-# 这只是学习 Vue + webpack + UI 的练习，跟随着视频所写     ———— SprWu
+# 这只是学习 Vue + webpack + UI 的练习，跟随着视频所写     ———— SprWu 2019.2.17
 
 > 
 
