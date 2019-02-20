@@ -1,7 +1,7 @@
 <template>
   <div class="app-contauner">
     <!-- 顶部 Header 区域 -->
-    <mt-header fixed title="项目练习"></mt-header>
+    <mt-header fixed title="项目练习 ---吴超"></mt-header>
 
     <!-- 中间 路由 router-view 区域 -->
     <!-- 动画过渡 -->
@@ -41,7 +41,10 @@ export default {
 
 <style scoped>
 .app-contauner {
+  /* 顶部留出 */
   padding-top: 40px;
+  /* 底部留出 */
+  padding-bottom: 50px;
 	/* 解决 当页面元素横向过大时 出现滚动条 */
 	overflow-x: hidden;
 }

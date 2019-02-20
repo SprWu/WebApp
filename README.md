@@ -29,6 +29,21 @@
             1. 六宫格使用 MUI 的 grid-default
             2. 改造默认六宫格的图标和文字
             3. 修改自己所需的样式
+        + 六宫格之新闻资讯
+            1. newslist.vue 并配置路由
+            2. list组件为MUI的 media-list 并设置所需样式
+            3. vue-resource 获取数据
+            4. 全局过滤器 完善新闻列表
+            5. 新闻资讯列表点击 跳转到新闻详情：
+                (1): 每一条新闻都为 router-link, 同时跳转时提供唯一id标识符
+                    通过 this.$route.params.id 获取，使用this.[listname].concat()方法拼接数据，避免新数据覆盖旧数据
+                (2): 创建 新闻详情(newsinfo) 组件并设置样式
+                (3): 在 路由中，将 新闻详情的 路由地址 和组件对应起来
+                (4): vue-resource 获取数据(目前无api接口)
+                (5): 创建评论子组件,设置样式并导入到 newsinfo 组件中
+                (6): vue-resource 获取用户评论(简单模拟)
+                (7): 完善 加载更多功能(未模拟后台服务)
+            
         
 # 底部 Tabbar 区域，使用 MUI 的 Tabbar.html
 > 
