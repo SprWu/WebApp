@@ -1,53 +1,53 @@
 <template>
     <div class="goods-list">
-       <div class="goods-item">
-           <img src="https://g-search3.alicdn.com/img/bao/uploaded/i4/i2/2616970884/O1CN01VtMWyf1IOucLzHI24_!!0-item_pic.jpg_360x360Q90.jpg_.webp">
-           <h1 class="title">下单低至5288元】Apple/苹果 iPhone XR 移动联通电信4G</h1>
+       <div class="goods-item"  v-for="item in gdlist" :key="item.id" @click="goto(item.id)">
+           <img :src="item.src">
+           <h1 class="title">{{ item.title }}</h1>
            <div class="info">
                <p class="price">
-                   <span class="now">￥5688</span>
-                   <span class="old">￥6000</span>
+                   <span class="now">￥{{ item.now }}</span>
+                   <span class="old">￥{{ item.old }}</span>
                </p>
                <p class="sell">
                    <span>热卖中</span>
-                   <span>剩余60件</span>
+                   <span>剩余{{ item.black }}件</span>
                </p>
            </div>
        </div>
-          <div class="goods-item">
-           <img src="https://g-search3.alicdn.com/img/bao/uploaded/i4/i2/2616970884/O1CN01VtMWyf1IOucLzHI24_!!0-item_pic.jpg_360x360Q90.jpg_.webp">
-           <h1 class="title"> iPhone XR 移动联通电信4G</h1>
-           <div class="info">
-               <p class="price">
-                   <span class="now">￥5688</span>
-                   <span class="old">￥6000</span>
-               </p>
-               <p class="sell">
-                   <span>热卖中</span>
-                   <span>剩余60件</span>
-               </p>
-           </div>
-       </div>
-          <div class="goods-item">
-           <img src="https://g-search3.alicdn.com/img/bao/uploaded/i4/i2/2616970884/O1CN01VtMWyf1IOucLzHI24_!!0-item_pic.jpg_360x360Q90.jpg_.webp">
-           <h1 class="title">下单低至5288元】Apple/苹果 iPhone XR 移动联通电信4G</h1>
-           <div class="info">
-               <p class="price">
-                   <span class="now">￥5688</span>
-                   <span class="old">￥6000</span>
-               </p>
-               <p class="sell">
-                   <span>热卖中</span>
-                   <span>剩余60件</span>
-               </p>
-           </div>
-       </div>
+
     </div>
 </template>
 
 <script>
+import { Toast } from "mint-ui";
 export default {
-    
+    data(){
+        return {
+            gdlist: []
+        }
+    },
+    methods: {
+        getgoodslist(){
+            this.$http.get('http://192.168.0.105:80/vue/goods.php').then(result => {
+                if(result.body.status === 200){
+                    //console.log(result.body)
+                    this.gdlist = result.body.message
+                }else{
+                    Toast("商品数据加载失败！")
+                }
+            })
+        },
+        // 页面跳转(编程式路由导航)
+        goto(id){
+            // 1.this.$router.push('path')
+            // 2.this.$router.push({path: 'path'})
+            // 3.this.$router.push({name: 'name',params:{id:id}})
+            this.$router.push('/home/goodsinfo/' + id);
+        }
+    },
+    created(){
+        this.getgoodslist()
+    }
 }
 </script>
 

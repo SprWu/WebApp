@@ -68,6 +68,10 @@
         + 缩略图 (vue-preview)插件
         + 六宫格之商品购买
             1. 两列布局 主要是css3的运用
+            2. 获取数据 (本地模拟)
+            3. 编写商品详情页组件 (goodsinfo.vue)，组件(MUI card)
+                (1): 图片展示区域: 获取路由id 获取图片(本地模拟)
+        + 略
         
         
 # 底部 Tabbar 区域，使用 MUI 的 Tabbar.html
