@@ -3,15 +3,16 @@
         <h3>发表评论</h3>
         <hr>
         <textarea 
+            v-model="msg"
             placeholder="请输入要评论的内容( 最多120字 )"
             maxlength="120"></textarea>
-        <mt-button type="primary" size="large">发表评论</mt-button>
+        <mt-button type="primary" size="large" @click="submit">发表评论</mt-button>
         <div class="cmt-list">
             <div class="cmt-item" v-for="(item , i) in cmtlist" :key="item.id">
                 <div class="cmt-title">
                     第{{ i+1 }}楼&nbsp;&nbsp;
                     用户：{{ item.name }}&nbsp;&nbsp;
-                    发表时间：{{ item.time }}&nbsp;&nbsp;
+                    发表时间：{{ item.time | timeCorrect }}&nbsp;&nbsp;
                 </div>
                 <div class="cmt-body">
                    {{ item.content }}
@@ -31,7 +32,8 @@ export default {
         return {
             cmtlist: [],
             newsid: '',
-            pageindex: '1'
+            pageindex: '1',
+            msg: ''
         }
     },
     methods: {
@@ -55,6 +57,25 @@ export default {
         getmore(){
             this.pageindex++
             //this.getcomment()
+        },
+        submit(){
+            //无服务器接口
+            /* this.$http.post('url' + $route.params.id,{msg:this.msg},{emulateJSON:true}).then(result => {
+                ...
+            }) */
+            //本地添加
+            if(!this.msg.trim().length == 0){
+                let now = new Date()
+                this.cmtlist.unshift({
+                    content: this.msg,
+                    id: Math.random()*Math.random()*100,
+                    name: "匿名用户",
+                    time: Date.now(),
+                });
+                this.msg = ''
+            }else{
+                Toast("评论内容不能为空！")
+            }
         }
     },
     props: ["id"],

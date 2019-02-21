@@ -31,7 +31,7 @@ export default {
       this.$http.get("https://www.apiopen.top/journalismApi").then(result => {
         if (result.body.code === 200) {
           let news = result.body.data;
-          console.log(news);
+          //console.log(news);
           this.newslist = this.newslist.concat(
             news.dy,
             news.toutiao,

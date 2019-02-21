@@ -29,7 +29,7 @@ export default {
     methods: {
         getnewsinfo(){
             // 获取数据
-            this.$http.get('url' + this.id ).then(result => {
+            this.$http.get('url' + this.id).then(result => {
                 if(result.body.status === 200){
                     this.newsinfo = result.body.message
                 }else {
@@ -42,7 +42,7 @@ export default {
         'commentBox': comment
     },
     created () {
-        this.getnewsinfo();
+        //this.getnewsinfo();
     }
 }
 </script>

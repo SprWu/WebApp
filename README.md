@@ -43,7 +43,32 @@
                 (5): 创建评论子组件,设置样式并导入到 newsinfo 组件中
                 (6): vue-resource 获取用户评论(简单模拟)
                 (7): 完善 加载更多功能(未模拟后台服务)
-            
+                (8): 完善 发表评论功能(未模拟后台服务，本地添加(数组的unshift方法))
+        + 六宫格之图片分享
+            1. photolist.vue 并配置路由
+            2. photolist 组件包括：
+                (1): 顶部滑动条(MUI tab-top-webview-main),去掉slider区域的  mui-fullscreen 全屏类，需要导入js组件(mui.js)并初始化(未模拟后台服务)
+                    ```
+                    mui('.mui-scroll-wrapper').scroll({
+                        deceleration: 0.0005 //flick 减速系数，系数越大，滚动速度越慢，滚动距离越小，默认值0.0006
+                    }); 
+                    ```
+                    坑：
+                     该代码可能使用了 'caller',' callee','arguments',在严格模式下会报错
+                    -> 1. 修改组件js代码(不现实) 2. 关闭webpack 严格模式(√)
+                     Chrome浏览器警告
+                    -> 添加样式 *{ touch-action: pan-y; }
+                     滑动效果刷新页面后才可用
+                    -> 将初始化代码放入 mounted(){} 生命钩子函数内
+                     导致底部 tabbar(首页 会员 ...) 组件无响应
+                    -> 引入mui.js后，由于 MUI 各组件与mui.js内部代码有关联导致出现异常，
+                       在App.vue中，修改 mui-tab-item 名称即可(原样式复制给新样式)
+
+                (2): 图片展示区(Mint-ui Lazy-load)
+        + 缩略图 (vue-preview)插件
+        + 六宫格之商品购买
+            1. 两列布局 主要是css3的运用
+        
         
 # 底部 Tabbar 区域，使用 MUI 的 Tabbar.html
 > 
