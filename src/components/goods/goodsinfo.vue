@@ -91,7 +91,16 @@ export default {
   methods: {
     addshopcar() {
       this.ballflag = !this.ballflag;
-      console.log(this.$refs.ball.getValue());
+
+        //要保存到store中的购物车信息
+      let goodsinfo = {
+        id: this.id,
+        count: this.selectCount,
+        price: this.prlist[this.id][0],
+        selected: true
+      };
+
+      this.$store.commit('addtocar',goodsinfo);
     },
     beforeEnter(el) {
       el.style.transform = "translate(0,0)";
@@ -108,19 +117,19 @@ export default {
       // 获取 数量标 的坐标
       const badgeps = document.getElementById("badge").getBoundingClientRect();
 
-        const x = badgeps.left - ballps.left;
-        const y = badgeps.top - ballps.top;
-        //使用模板字符串时要使用 ``
+      const x = badgeps.left - ballps.left;
+      const y = badgeps.top - ballps.top;
+      //使用模板字符串时要使用 ``
       el.style.transform = `translate(${x}px,${y}px)`;
       //cubic... 是动画效果
-      el.style.transition = "all 1s cubic-bezier(.4,-0.3,1,.68)";
+      el.style.transition = "all 0.5s cubic-bezier(.4,-0.3,1,.68)";
       done();
     },
     afterEnter(el) {
       this.ballflag = !this.ballflag;
     },
-    getCount(data){
-        this.selectCount =  data;
+    getCount(data) {
+      this.selectCount = data;
     }
   },
   components: {

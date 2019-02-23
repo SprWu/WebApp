@@ -1,6 +1,8 @@
 # webapp
 # 这只是学习 Vue + webpack + UI 的练习，跟随着视频所写     ———— SprWu 2019.2.17
 
+# 使用: Vue、Vue-cli、webpack、Vue-resource、vue-preview、vuex、Mint-ui、MUI
+
 # 顶部 Header 区域，使用 Mint-ui 中的header组件
 # 中间 是一个路由 router-view，展示对应的内容
     * 制作 购物车 图标：
