@@ -1,10 +1,14 @@
 <template>
   <div class="app-contauner">
     <!-- 顶部 Header 区域 -->
-    <mt-header fixed title="项目练习 ---吴超"></mt-header>
-    <mt-button class="goback" @click="goBack">
+    <mt-header fixed title="项目练习 ---吴超">
+      <span slot="left" v-show="flag">
+        <mt-button icon="back" @click="goBack">返回</mt-button>
+      </span>
+    </mt-header>
+    <!-- <mt-button @click="goBack">
       <img src="./icons/back.png" height="20" width="20" slot="icon">
-    </mt-button>
+    </mt-button> -->
     <!-- 中间 路由 router-view 区域 -->
     <!-- 动画过渡 -->
     <transition>
@@ -38,18 +42,33 @@
 <script>
 export default {
   name: "App",
+  data(){
+    return {
+      flag: false//控制返回按钮隐藏/显示
+    }
+  },
   methods: {
     goBack(){
       //console.log(this)
       this.$router.go(-1);
     }
+  },
+  watch: {
+    //判断路由地址是否首页
+    "$route.path": function(path){
+      this.flag = path === '/home'?false:true;
+    }
+  },
+  created () {
+    //即使更新路由地址状态
+    this.flag = this.$route.path === '/home'?false:true;
   }
 };
 </script>
 
 <style scoped>
 .goback {
-  position: absolute;
+  position: fixed;
   z-index: 99;
   top: 0;
   background-color: #26a2ff;

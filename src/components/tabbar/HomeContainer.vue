@@ -71,7 +71,7 @@ export default {
   },
   methods: {
     getSwipeData() {
-      this.$http.get("http://192.168.0.105:80/vue/swipePhoto.php").then(result => {
+      this.$http.get("http://localhost:80/vue/swipePhoto.php").then(result => {
         //console.log(result.body);
         if (result.body.status === "200") {
           //获取成功 将数据给 swipeList

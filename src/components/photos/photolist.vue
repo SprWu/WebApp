@@ -46,7 +46,7 @@ export default {
   },
   methods: {
     getphoto() {
-      this.$http.get("http://192.168.0.105:80/vue/photo.php").then(result => {
+      this.$http.get("http://localhost:80/vue/photo.php").then(result => {
         if (result.body.status === 200) {
           //console.log(result.body)
           this.ptlist = result.body.message;

@@ -20,16 +20,19 @@ Vue.use(VueResource)
 //导入 vuex
 import Vuex from 'vuex'
 Vue.use(Vuex)
+//从本地 localstorage 中获取保存的信息
+var car = JSON.parse(localStorage.getItem('car') || '[]');
 var store = new Vuex.Store({
   state: { //获取 this.$store.state.name
-    car: []
+    car,
   },
-  mutations: { //调用 this.$store.commit('name',[参数])
+  mutations: {
+    //调用 this.$store.commit('name',[参数])
     addtocar(state, goods) {
       var flag = false;
       state.car.some(item => {
         if (item.id == goods.id) {
-          item.count += parseInt(goods.count);
+          item.count += parseInt(goods.count); //这里要 累加
           flag = true;
           return true;
         }
@@ -37,15 +40,65 @@ var store = new Vuex.Store({
       if (!flag) {
         state.car.push(goods);
       }
+      localStorage.setItem('car', JSON.stringify(state.car));
+    },
+    //购物车页面 更新
+    updatagoods(state, goodsnum) {
+      state.car.forEach(item => {
+        if (item.id == goodsnum.id) {
+          item.count = parseInt(goodsnum.count); //这里要 覆盖
+          return true;
+        }
+      })
+      localStorage.setItem('car', JSON.stringify(state.car));
+    },
+    removegoods(state, goodsid) {
+      state.car.some((item, i) => {
+        if (item.id == goodsid) {
+          state.car.splice(i, 1);
+          return true;
+        }
+      })
+      localStorage.setItem('car', JSON.stringify(state.car));
+    },
+    //单选框
+    selectchange(state, goodsid) {
+      state.car.some(item => {
+        if (item.id == goodsid) {
+          item.selected = !item.selected;
+          return true;
+        }
+      })
+      localStorage.setItem('car', JSON.stringify(state.car));
     }
   },
   getters: { //调用 $store.getters.name
-    getallcount(state){
+    getallcount(state) {
       var c = 0;
-      state.car.forEach(item=>{
+      state.car.forEach(item => {
         c += item.count;
       })
       return c;
+    },
+    getselect(state) {
+      var o = {};
+      state.car.forEach(item => {
+        o[item.id] = item.selected;
+      })
+      return o;
+    },
+    getsum(state){
+      var s = {
+        sum: 0,
+        count: 0
+      };
+      state.car.forEach(item=>{
+        if(item.selected){
+          s.sum += item.count;
+          s.count += item.price * item.count;
+        }
+      })
+      return s;
     }
   }
 })

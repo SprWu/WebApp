@@ -2,19 +2,17 @@
   <div class="shopcar">
     <!-- 商品列表项 -->
     <div class="goods-list">
-      <div class="mui-card" v-for="item in idlist" :key="item">
+      <div class="mui-card" v-for="(item,i) in idlist" :key="item.id">
         <div class="mui-card-content">
           <div class="mui-card-content-inner">
-            <mt-switch></mt-switch>
-            <img
-              :src="ptlist[item]"
-            >
+            <mt-switch v-model="$store.getters.getselect[item.id]" @change="selchange(item.id)"></mt-switch>
+            <img :src="ptlist[item.id]">
             <div class="info">
-              <h1>{{ namelist[item]}}</h1>
+              <h1>{{ namelist[item.id]}}</h1>
               <p>
-                <span class="price">￥ {{prlist[item][0]}}</span>
-                <shopcarbox></shopcarbox>
-                <a href="#">删除</a>
+                <span class="price">￥ {{prlist[item.id][0]}}</span>
+                <shopcarbox :goodsid="{id:item.id,count:item.count}"></shopcarbox>
+                <a href="#" @click.prevent="remove(item.id,i)">删除</a>
               </p>
             </div>
           </div>
@@ -25,9 +23,19 @@
     <!-- 结算 -->
     <div class="mui-card">
       <div class="mui-card-content">
-        <div class="mui-card-content-inner"></div>
+        <div class="mui-card-content-inner settle">
+          <div class="left">
+            <p>总计(不含运费)</p>
+            <p>已勾选商品
+              <span class="red">{{ $store.getters.getsum.sum}}</span> 件，总价
+              <span class="red">￥{{ $store.getters.getsum.count}}</span>
+            </p>
+          </div>
+          <mt-button type="danger">去结算</mt-button>
+        </div>
       </div>
     </div>
+    <p hidden>{{ $store.getters.getselect }}</p>
   </div>
 </template>
 
@@ -78,18 +86,26 @@ export default {
     };
   },
   methods: {
-      getidlist(){
-          var id = [];
-          this.$store.state.car.forEach(item =>{
-              this.idlist.push(item.id);
-          })
-      }
+    getidlist() {
+      this.$store.state.car.forEach(item => {
+        this.idlist.push(item);
+      });
+    },
+    remove(id, index) {
+      //从 idlist 中删除index位置的数据
+      this.idlist.splice(index, 1);
+      //从 store 中输出id对应的数据
+      this.$store.commit("removegoods", id);
+    },
+    selchange(id) {
+      this.$store.commit("selectchange", id);
+    }
   },
   components: {
     shopcarbox
   },
-  created(){
-      this.getidlist();
+  created() {
+    this.getidlist();
   }
 };
 </script>
@@ -118,6 +134,17 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+}
+
+.settle {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.red {
+  color: red;
+  font-size: 16px;
+  font-weight: bold;
 }
 </style>
 
